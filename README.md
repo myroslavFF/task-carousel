@@ -2,7 +2,6 @@
 
 The purpose of this exercise is to train you designing simple interface implementations and use them.
 
-Estimated workload of this exercise is _2h_.
 
 ### Description
 
@@ -44,59 +43,3 @@ Also, you need to implement the [`TaskCarousel`](src/main/java/com/epam/rd/autot
   - If the task is finished after execution, remove it from the carousel.
   - The method returns `true` if any task was executed. Returns `false` otherwise.
 
-### Examples
-
-Single task case:
-```java
-TaskCarousel carousel = new TaskCarousel(4);
-
-System.out.println(carousel.isEmpty()); //true
-System.out.println(carousel.isFull()); //false
-System.out.println(carousel.execute()); //false
-
-CountDownTask task = new CountDownTask(2);
-System.out.println(carousel.addTask(task)); //true
-
-System.out.println(carousel.isEmpty()); //false
-System.out.println(carousel.isFull()); // false
-
-System.out.println(task.getValue()); //2
-System.out.println(carousel.execute()); //true
-System.out.println(task.getValue()); //1
-System.out.println(carousel.execute()); //true 
-System.out.println(task.getValue()); //0
-
-System.out.println(carousel.execute()); //false
-System.out.println(carousel.isEmpty()); //true
-```
-
-Three tasks case:
-```java
-TaskCarousel carousel = new TaskCarousel(3);
-
-CountDownTask task1 = new CountDownTask(2);
-CountDownTask task2 = new CountDownTask(2);
-CompleteByRequestTask task3 = new CompleteByRequestTask();
-
-System.out.println(carousel.addTask(task1)); //true
-System.out.println(carousel.addTask(task2)); //true
-System.out.println(carousel.addTask(task3)); //true
-        
-System.out.println(carousel.isFull()); // true
-        
-for(int i = 0; i < 100; i++){
-    System.out.println(carousel.execute()); // true
-}
-
-System.out.println(task1.isFinished()); // true
-System.out.println(task2.isFinished()); // true
-System.out.println(task3.isFinished()); // false
-
-task3.complete();
-
-System.out.println(task3.isFinished()); // false
-System.out.println(carousel.execute()); // true
-System.out.println(task3.isFinished()); // true
-
-System.out.println(carousel.isEmpty()); // true
-```
