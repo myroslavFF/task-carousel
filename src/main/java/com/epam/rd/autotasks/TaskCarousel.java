@@ -1,25 +1,45 @@
 package com.epam.rd.autotasks;
 
+import java.util.Arrays;
+
 public class TaskCarousel {
+    private final int capacity;
+    private int count;
+    private Task[] tasks;
 
     public TaskCarousel(int capacity) {
-        throw new UnsupportedOperationException();
+        this.capacity = capacity;
+        tasks = new Task[0];
     }
 
     public boolean addTask(Task task) {
-        throw new UnsupportedOperationException();
+        if (task != null && tasks.length < capacity && !task.isFinished()){
+            tasks = Arrays.copyOf(tasks, tasks.length + 1);
+            tasks[tasks.length - 1] = task;
+            return true;
+        }return false;
     }
 
     public boolean execute() {
-        throw new UnsupportedOperationException();
+        if (isEmpty())return false;
+        count %= tasks.length;
+        tasks[count].execute();
+
+        if (tasks[count].isFinished()){
+            Task [] copyArray = new Task[tasks.length - 1];
+            System.arraycopy(tasks,0,copyArray,0, count);
+            System.arraycopy(tasks, count + 1, copyArray, count, tasks.length - count - 1);
+            tasks = copyArray;
+        }else count++;
+        return true;
     }
 
     public boolean isFull() {
-        throw new UnsupportedOperationException();
+        return (tasks.length == capacity);
     }
 
     public boolean isEmpty() {
-        throw new UnsupportedOperationException();
+        return (tasks.length == 0);
     }
 
 }
